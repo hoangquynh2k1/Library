@@ -31,9 +31,20 @@ namespace API_Library.BUS
                 entity.Status = borrowing[i].Status;
                 entity.Details = listDetail;
                 entity.Name = borrower.Name;
+                entity.NotificationStatus= borrowing[i].NotificationStatus;
+                entity.BorrowStatus = CheckBorrow(entity);
                 list.Add(entity);
             }
             return list;
+        }
+        private bool CheckBorrow(BorrowingEntity e)
+        {
+            for(int i =0;i< e.Details.Count;i++)
+            {
+                if (e.Details[i].ReturnDate == null)
+                    return false;
+            }
+            return true;
         }
     }
 }

@@ -11,6 +11,8 @@ namespace API_Library.Entities
         public short? StaffId { get; set; }
         public DateTime? BorrowedDate { get; set; }
         public DateTime? AppointmentDate { get; set; }
+        public bool? NotificationStatus { get; set; }
+        public bool? BorrowStatus { get; set; }
         public bool? Status { get; set; }
         public string Name { get; set; }
         public List<BorrowingDetail> Details { get; set; }

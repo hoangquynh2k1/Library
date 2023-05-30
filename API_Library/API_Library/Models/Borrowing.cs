@@ -18,6 +18,7 @@ namespace API_Library.Models
         public DateTime? BorrowedDate { get; set; }
         public DateTime? AppointmentDate { get; set; }
         public bool? Status { get; set; }
+        public bool? NotificationStatus { get; set; }
 
         public virtual Borrower Borrower { get; set; }
         public virtual staff Staff { get; set; }

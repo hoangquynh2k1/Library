@@ -36,16 +36,31 @@ namespace API_Library.Controllers
             {
                 var page = int.Parse(formData["page"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
-                int? categoryId = null;
+                int? dropdownId = null;
                 string loc = "";
                 if (formData.Keys.Contains("loc") && !string.IsNullOrEmpty(Convert.ToString(formData["loc"])))
                 { loc = formData["loc"].ToString(); }
-                if (formData.Keys.Contains("categoryId") && !string.IsNullOrEmpty(Convert.ToString(formData["ma_danh_muc"])))
-                { categoryId = int.Parse(formData["ma_sach"].ToString()); }
-                List<BorrowingEntity> list = db.GetData();
+                if (formData.Keys.Contains("dropdown") && !string.IsNullOrEmpty(Convert.ToString(formData["dropdown"])))
+                { dropdownId = int.Parse(formData["dropdown"].ToString()); }
+                List<BorrowingEntity> list = db.GetData().Where(x => x.Name.Contains(loc)).ToList();
+                switch(dropdownId)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        list = list.Where(x => x.BorrowStatus == false).ToList(); break;
+                    case 2:
+                        list = list.Where(x => x.BorrowStatus == true).ToList(); break;
+                    case 3:
+                        list = list.Where(x => x.Status == true).ToList();
+                        break;
+                    case 4:
+                        list = list.Where(x => x.Status == false).ToList();
+                        break;
+                }    
                 long total = list.Count();
                 list = list.
-                    Skip(pageSize * (page - 1)).Take(pageSize).ToList();
+                    Skip(pageSize * (page - 1)).OrderBy(x => x.BorrowStatus).Take(pageSize).ToList();
                 return Ok(
                            new DataSearch
                            {

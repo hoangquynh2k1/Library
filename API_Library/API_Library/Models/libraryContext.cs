@@ -34,9 +34,8 @@ namespace API_Library.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("Server=DESKTOP-RGS773K\\HOANGQUYNH;Database=library;Trusted_Connection=True;");
-                optionsBuilder.UseSqlServer("workstation id=greenlibrary.mssql.somee.com;packet size=4096;user id=hoangquynh_SQLLogin_2;pwd=123456789;data source=greenlibrary.mssql.somee.com;persist security info=False;initial catalog=greenlibrary");
-                //workstation id=greenlibrary.mssql.somee.com;packet size=4096;user id=hoangquynh_SQLLogin_2;pwd=123456789;data source=greenlibrary.mssql.somee.com;persist security info=False;initial catalog=greenlibrary
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-RGS773K\\HOANGQUYNH;Database=library;Trusted_Connection=True;");
             }
         }
 
@@ -128,6 +127,8 @@ namespace API_Library.Models
                     .HasColumnName("Borrowed_date");
 
                 entity.Property(e => e.BorrowerId).HasColumnName("BorrowerID");
+
+                entity.Property(e => e.NotificationStatus).HasColumnName("Notification_status");
 
                 entity.HasOne(d => d.Borrower)
                     .WithMany(p => p.Borrowings)
