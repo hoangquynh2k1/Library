@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using API_Library.BUS;
 using API_Library.Models;
@@ -34,12 +34,22 @@ namespace API_Library.Controllers
                 var page = int.Parse(formData["page"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
                 int? categoryId = null;
+                int? dropdownId = null;
                 string loc = "";
                 if (formData.Keys.Contains("loc") && !string.IsNullOrEmpty(Convert.ToString(formData["loc"]))) 
                 { loc = formData["loc"].ToString(); }
-                if (formData.Keys.Contains("categoryId") && !string.IsNullOrEmpty(Convert.ToString(formData["ma_danh_muc"])))
-                { categoryId = int.Parse(formData["ma_sach"].ToString()); }
+                if (formData.Keys.Contains("dropdown") && !string.IsNullOrEmpty(Convert.ToString(formData["dropdown"])))
+                { dropdownId = int.Parse(formData["dropdown"].ToString()); }
                 List<Book> list = db.Get();
+                switch (dropdownId)
+                {
+                    case 0:
+                        list = list.Where(x => x.Status == true).ToList(); break;
+                    case 1:
+                        list = list.Where(x => x.Status == true).ToList(); break;
+                    case 2:
+                        list = list.Where(x => x.Status == false).ToList(); break;
+                }
                 long total = list.Count();
                 list = list.Where(x => (x.CategoryId == categoryId || categoryId == null)
                     && (x.Title.ToLower()).Contains(loc.ToLower())).
